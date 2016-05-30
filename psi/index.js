@@ -14,7 +14,7 @@ Psi.prototype.eventHandlers.onSessionStarted = function (sessionStartedRequest, 
 
 Psi.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
     console.log("Psi onLaunch requestId: " + launchRequest.requestId + ", sessionId: " + session.sessionId);
-    response.ask("Welcome to Psi. Talk to me, Goose.",  "Say something.");
+    response.ask("Welcome to Psi. Talk to me Goose.",  "Say something.");
     // response.ask("Howdy",  "Say something.");
 };
 

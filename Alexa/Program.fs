@@ -18,7 +18,6 @@ while true do
     receiveMessageRequest.MaxNumberOfMessages <- 10
     receiveMessageRequest.WaitTimeSeconds <- 10
     let receiveMessageResponse = client.ReceiveMessage(receiveMessageRequest)
-    // Console.WriteLine("Printing received message.\n");
     for message in receiveMessageResponse.Messages do
         // Console.WriteLine(" Message");
         // Console.WriteLine(" MessageId: {0}", message.MessageId);

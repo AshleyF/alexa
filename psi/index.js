@@ -27,45 +27,6 @@ Psi.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, sess
 // amazonSQSConfig.ServiceURL <- "http://sqs.us-west-2.amazonaws.com"
 // let client = new AmazonSQSClient(amazonSQSConfig)
 
-function toPigLatin(phrase) {
-    function isVowel(char) {
-        return ['a', 'e', 'i', 'o', 'u'].indexOf(char) != -1;
-    }
-    function consonant(text) {
-        i = 0;
-        while (!isVowel(text.charAt(i)))
-        i++;
-        return text.substring(i) + text.substring(0, i) + "ay";
-    }
-    function vowel(text) {
-        if (text.charAt(text.length - 1) == 's')
-        return text.substring(0, text.length -1) + "ays";
-        return text + "ay";
-    }
-    function wordProcessor(text) {
-        if (isVowel(text.charAt(0)))
-            return vowel(text);
-        else
-        return consonant(text);
-    }
-    endPhrase = "";
-    for (var i = 0; phrase.length > 0; i++) {
-        if (phrase[i] == null || phrase[i] == " ") {
-            endPhrase += wordProcessor(phrase.substring(0, i)) + " ";
-            if (phrase[i] == " ")
-                phrase =  phrase.substring(i + 1);
-            else
-                phrase = phrase.substring(i);
-            i = -1;
-        }
-        if (phrase.length == 1) {
-            endPhrase += wordProcessor(phrase);
-            phrase = "";
-        }
-    }
-    return endPhrase;
-}
-
 var AWS = require('aws-sdk');
 // var QUEUE_URL = 'https://sqs.us-west-2.amazonaws.com/660181231855/Alexa';
 // var sqs = new AWS.SQS({region : 'us-west-2'});
@@ -83,7 +44,6 @@ Psi.prototype.intentHandlers = {
                     response.tellWithCard("Psi error: " + JSON.stringify(err), "Greeter", "Nothing");
                 } else {
                     var dict = intent ? (intent.slots ? (intent.slots.dictation ? (intent.slots.dictation.value ? intent.slots.dictation.value : "Missing value") : "Missing dictation") : "Missing slots") : "Missing intent";
-                    // response.tellWithCard(toPigLatin(dict.toLowerCase()), "Greeter", "Nothing");
                     // response.tellWithCard(dict.split(" ").reverse().join(" "), "Greeter", "Nothing");
                     // response.tellWithCard("Psi heard: " + dict.split(" ").reverse().join(" "), "Greeter", "Nothing");
                     response.tellWithCard("", "Greeter", dict);
@@ -101,4 +61,3 @@ exports.handler = function (event, context) {
     var psi = new Psi();
     psi.execute(event, context);
 };
-
